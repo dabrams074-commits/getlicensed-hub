@@ -1,1 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GetLicensed — Professional Compliance Tracker</title>
+  <meta name="description" content="GetLicensed tracks your continuing education compliance automatically. Upload a certificate, AI reads it, and your credits are logged. Built for CPAs, Attorneys, and Physicians." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c1523;
+      --surface: #111e2e;
+      --surface2: #1e2a3a;
+      --border: #1e2a3a;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --subtle: #94a3b8;
+      --blue: #3b82f6;
+      --indigo: #6366f1;
+      --teal: #0d9488;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --pink: #ec4899;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12, 21, 35, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .logo-text { font-weight: 700; font-size: 18px; }
+    .logo-sub { font-size: 12px; color: var(--muted); }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-link {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--subtle);
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+      background: none;
+      border: none;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface2); }
+
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1e3a5f;
+      color: #60a5fa;
+      border: 1px solid #2d5a8e;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--subtle);
+      max-width: 620px;
+      margin: 0 auto 48px;
+      font-weight: 400;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: var(--surface2); }
+
+    /* HOW IT WORKS */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #60a5fa;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--subtle);
+      font-size: 16px;
+      margin-bottom: 56px;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      position: relative;
+    }
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .step h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .step p { font-size: 13px; color: var(--subtle); line-height: 1.6; }
+
+    /* PRODUCTS */
+    .products { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .products-inner { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { transform: translateY(-3px); }
+    .card-cpa:hover { border-color: #3b82f6; }
+    .card-jd:hover { border-color: #0d9488; }
+    .card-md:hover { border-color: #ec4899; }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .card-cpa .card-icon { background: #1e3a5f; }
+    .card-jd .card-icon { background: #0d2c28; }
+    .card-md .card-icon { background: #2d1040; }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .card-cpa .card-tag { color: #60a5fa; }
+    .card-jd .card-tag { color: #2dd4bf; }
+    .card-md .card-tag { color: #f9a8d4; }
+
+    .card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .card-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .card p { font-size: 14px; color: var(--subtle); line-height: 1.7; margin-bottom: 24px; flex: 1; }
+
+    .card-stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--subtle);
+    }
+    .stat strong { display: block; font-size: 15px; font-weight: 700; color: var(--text); }
+
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 9px;
+      padding: 11px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+      width: 100%;
+    }
+    .card-btn:hover { opacity: 0.85; }
+    .card-cpa .card-btn { background: linear-gradient(135deg, #3b82f6, #6366f1); color: #fff; }
+    .card-jd .card-btn { background: linear-gradient(135deg, #0d9488, #0891b2); color: #fff; }
+    .card-md .card-btn { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: #fff; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .feature p { font-size: 13px; color: var(--subtle); line-height: 1.6; }
+
+    /* ABOUT */
+    .about { background: var(--surface); border-top: 1px solid var(--border); }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 700px) {
+      .about-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+    .about-text h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 700; margin-bottom: 20px; letter-spacing: -0.5px; }
+    .about-text p { color: var(--subtle); font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-stat {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .about-stat .num { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #3b82f6, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .about-stat .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left { display: flex; align-items: center; gap: 10px; }
+    .footer-right { font-size: 13px; color: var(--muted); }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* SCROLL SMOOTH */
+    html { scroll-behavior: smooth; }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 60px 24px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <div>
+        <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1;"><span style="font-weight:800">Get</span><span style="font-weight:300">Licensed</span></div>
+        <div style="font-size:9px;color:#64748b;letter-spacing:2px;font-weight:500;margin-top:2px;">by Intuitive Software</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#products" class="nav-link">Products</a>
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#about" class="nav-link">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✦ AI-Powered Compliance Tracking</div>
+  <h1>Your continuing education,<br /><span>handled automatically.</span></h1>
+  <p>Snap a photo of your certificate. AI reads it and logs your credits instantly. GetLicensed tracks your compliance so you can focus on your work.</p>
+  <div class="hero-actions">
+    <a href="#products" class="btn-primary">Choose Your Profession →</a>
+    <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-label">How It Works</div>
+  <div class="section-title">Three steps to full compliance</div>
+  <div class="section-sub">No manual entry. No spreadsheets. Just snap, log, and track.</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Snap your certificate</h3>
+      <p>Take a photo or upload a PDF of any completion certificate from any accredited provider.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>AI fills it in</h3>
+      <p>Our AI reads the certificate and automatically extracts the course title, provider, date, and credits earned.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Track your progress</h3>
+      <p>Your dashboard shows exactly where you stand — total credits, ethics hours, specialty requirements, and renewal deadlines.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Export when you need it</h3>
+      <p>Download your full log as Excel, print a compliance report, or ZIP all your certificates for credentialing in one click.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-inner">
+    <div class="section-label">Our Products</div>
+    <div class="section-title">Built for your profession</div>
+    <div class="section-sub">Each version knows the exact requirements for your state and license type.</div>
+
+    <div class="cards">
+
+      <!-- CPA -->
+      <div class="card card-cpa">
+        <div class="card-icon">📊</div>
+        <div class="card-tag">For CPAs</div>
+        <h3>Licensed · Accounting</h3>
+        <div class="card-sub">CPE Compliance Tracker</div>
+        <p>Tracks CPE hours against your state board requirements. Monitors ethics credits, A&A minimums for public accounting, annual minimums, and carry-forward rules across all reporting periods.</p>
+        <div class="card-stats">
+          <div class="stat"><strong>7</strong>States</div>
+          <div class="stat"><strong>8</strong>Credit Types</div>
+          <div class="stat"><strong>40–120</strong>Hrs/Period</div>
+        </div>
+        <a href="https://getlicensedcpa.netlify.app" class="card-btn">Get Started →</a>
+      </div>
+
+      <!-- JD -->
+      <div class="card card-jd">
+        <div class="card-icon">⚖️</div>
+        <div class="card-tag">For Attorneys</div>
+        <h3>Licensed · Law</h3>
+        <div class="card-sub">CLE Compliance Tracker</div>
+        <p>Tracks CLE credits against your state bar requirements. Monitors ethics and professionalism hours, elimination of bias credits, and newly admitted attorney requirements by state.</p>
+        <div class="card-stats">
+          <div class="stat"><strong>11</strong>States</div>
+          <div class="stat"><strong>7</strong>Credit Types</div>
+          <div class="stat"><strong>12–33</strong>Credits/Period</div>
+        </div>
+        <a href="https://getlicensedlaw.netlify.app" class="card-btn">Get Started →</a>
+      </div>
+
+      <!-- MD -->
+      <div class="card card-md">
+        <div class="card-icon">🩺</div>
+        <div class="card-tag">For Physicians</div>
+        <h3>Licensed · Medicine</h3>
+        <div class="card-sub">CME Compliance Tracker</div>
+        <p>Tracks CME credits against state medical board requirements and specialty board MOC requirements independently. One-click certificate ZIP for hospital credentialing packets.</p>
+        <div class="card-stats">
+          <div class="stat"><strong>11</strong>States</div>
+          <div class="stat"><strong>17</strong>Specialties</div>
+          <div class="stat"><strong>40–150</strong>Credits/Period</div>
+        </div>
+        <a href="https://getlicensedmd.netlify.app" class="card-btn">Get Started →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-label">Features</div>
+  <div class="section-title">Everything you need, nothing you don't</div>
+  <div class="section-sub">Built by professionals who were tired of tracking compliance in spreadsheets.</div>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">🤖</div>
+      <h4>AI Certificate Reading</h4>
+      <p>Upload any PDF or photo and AI extracts the course title, provider, date, and credits automatically. No typing required.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📁</div>
+      <h4>Certificate Repository</h4>
+      <p>Every certificate stored securely in the cloud. Pull them up instantly for audits, credentialing, or license renewal — anytime, anywhere.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📦</div>
+      <h4>One-Click ZIP Export</h4>
+      <p>Download all your certificates as a single ZIP file organized by date and course. Perfect for hospital credentialing packets.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <h4>Excel & Print Export</h4>
+      <p>Export your full credit log to Excel or generate a print-ready compliance report with a single click.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🗺️</div>
+      <h4>State-Specific Rules</h4>
+      <p>Built-in requirements for every supported state — ethics minimums, annual requirements, carry-forward rules, and renewal deadlines.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🏥</div>
+      <h4>Dual Board Tracking</h4>
+      <p>For physicians — track state medical board CME and specialty board MOC requirements independently from the same credit log.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <div class="section-label" style="text-align:left; margin-bottom: 16px;">About Licensed</div>
+      <h2>Built by a professional, for professionals.</h2>
+      <p>Licensed started as a CPE tracker built for CPAs — because tracking continuing education credits in spreadsheets is a waste of time for people who spent years earning their credentials.</p>
+      <p>The insight was simple: every licensed professional faces the same problem. CPAs, attorneys, and physicians all have complex, state-specific compliance requirements, multiple credit categories, and the constant risk of falling short at renewal time. Nobody had built a great tool for any of them.</p>
+      <p>So we built one. Then three. Licensed is a product of Intuitive Software — a company focused on building simple, focused tools for professionals in niche fields where great software doesn't exist yet.</p>
+    </div>
+    <div class="about-stat-grid">
+      <div class="about-stat">
+        <div class="num">3</div>
+        <div class="label">Professions Supported</div>
+      </div>
+      <div class="about-stat">
+        <div class="num">11</div>
+        <div class="label">States Covered</div>
+      </div>
+      <div class="about-stat">
+        <div class="num">AI</div>
+        <div class="label">Certificate Reading</div>
+      </div>
+      <div class="about-stat">
+        <div class="num">0</div>
+        <div class="label">Spreadsheets Required</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div>
+        <div style="font-size:18px;font-weight:800;color:#e2e8f0;line-height:1;"><span style="font-weight:800">Get</span><span style="font-weight:300">Licensed</span></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px;">by Intuitive Software</div>
+      </div>
+    </div>
+    <div class="footer-right">© 2026 Intuitive Software. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
+
 
